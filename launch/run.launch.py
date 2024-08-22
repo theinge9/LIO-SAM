@@ -5,7 +5,6 @@ from launch.actions import DeclareLaunchArgument
 from launch.substitutions import LaunchConfiguration, Command
 from launch_ros.actions import Node
 
-
 def generate_launch_description():
 
     share_dir = get_package_share_directory('lio_sam')
@@ -16,7 +15,7 @@ def generate_launch_description():
     params_declare = DeclareLaunchArgument(
         'params_file',
         default_value=os.path.join(
-            share_dir, 'config', 'params.yaml'),
+            share_dir, 'config', 'hesai_params.yaml'),
         description='FPath to the ROS2 parameters file to use.')
 
     print("urdf_file_name : {}".format(xacro_path))
@@ -30,19 +29,19 @@ def generate_launch_description():
             parameters=[parameter_file],
             output='screen'
             ),
-        Node(
-            package='robot_state_publisher',
-            executable='robot_state_publisher',
-            name='robot_state_publisher',
-            output='screen',
-            parameters=[{
-                'robot_description': Command(['xacro', ' ', xacro_path])
-            }]
-        ),
+        #Node(
+            #package='robot_state_publisher',
+            #executable='robot_state_publisher',
+            #name='robot_state_publisher',
+            #output='screen',
+            #parameters=[{
+            #   'robot_description': Command(['xacro', ' ', xacro_path])
+            #}]
+        #),
         Node(
             package='lio_sam',
             executable='lio_sam_imuPreintegration',
-            name='lio_sam_imuPreintegration',
+            #name='lio_sam_imuPreintegration',
             parameters=[parameter_file],
             output='screen'
         ),

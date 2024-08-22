@@ -2,8 +2,8 @@
   ros__parameters:
 
     # Topics
-    pointCloudTopic: "/points_raw"               #"/points_raw"               #"/points"        "/lidar_points"           # Point cloud data
-    imuTopic: "/imu_correct"                     #"/imu/data"    "/imu_correct"                    # IMU data
+    pointCloudTopic: "/lidar_points"             #"/points"                   # Point cloud data
+    imuTopic: "/imu"                             #"/imu/data"                        # IMU data
     odomTopic: "odometry/imu"                    # IMU pre-preintegration odometry, same frequency as IMU
     gpsTopic: "odometry/gpsz"                    # GPS odometry topic from navsat, see module_navsat.launch file
 
@@ -33,47 +33,39 @@
     #lidarMaxRange: 1000.0                        # default: 1000.0, maximum lidar range to be used
   
     # Sensor Settings
-    sensor: velodyne                               # lidar sensor type, either 'velodyne', 'ouster' or 'livox' """used Hesai as velodyne"""
+    sensor: hesai                               # lidar sensor type, either 'velodyne', 'ouster' or 'livox'
     N_SCAN: 32                                   # number of lidar channels (i.e., Velodyne/Ouster: 16, 32, 64, 128, Livox Horizon: 6)
-    Horizon_SCAN: 1800                            # lidar horizontal resolution (Velodyne:1800, Ouster:512,1024,2048, Livox Horizon: 4000)
+    Horizon_SCAN: 2000                            # lidar horizontal resolution (Velodyne:1800, Ouster:512,1024,2048, Livox Horizon: 4000)
     downsampleRate: 1                            # default: 1. Downsample your data if too many
     # points. i.e., 16 = 64 / 4, 16 = 16 / 1
     lidarMinRange: 0.05                          # default: 1.0, minimum lidar range to be used
     lidarMaxRange: 120.0
 
     # IMU Settings
-    imuAccNoise: 3.9939570888238808e-03     
-    imuGyrNoise: 1.5636343949698187e-03     
-    imuAccBiasN: 6.4356659353532566e-05
-    imuGyrBiasN: 3.5640318696367613e-05
+    imuAccNoise: 0.00981               #3.9939570888238808e-03
+    imuGyrNoise: 0.00122173            #1.5636343949698187e-03
+    imuAccBiasN: 0.00981               #6.4356659353532566e-05
+    imuGyrBiasN: 0.00122173            #3.5640318696367613e-05
 
     imuGravity: 9.80511
     imuRPYWeight: 0.01
-
-    #lidar>IMU   # for my data
-    #extrinsicTrans:  [ 0.0,  0.0,  0.0 ]
-    #extrinsicRot: [-1.0,  0.0,  0.0,
-    #                0.0,  -1.0,  0.0,
-    #                0.0,  0.0, 1.0 ]
+    
+    extrinsicTrans:  [ 0.0,  0.0,  0.0 ]
+    extrinsicRot: [-1.0,  0.0,  0.0,
+                    0.0,  -1.0,  0.0,
+                    0.0,  0.0, 1.0 ]
+    extrinsicRPY: [ -1.0,  0.0,  0.0,
+                    0.0,  -1.0,  0.0,
+                    0.0,  0.0,  1.0 ]
+    
+    #lidar>IMU
+    #extrinsicTrans: [ 0.0,  0.0,  0.0 ]
+    #extrinsicRot: [ 1.0,  0.0,  0.0,
+    #                0.0,  1.0,  0.0,
+    #                0.0,  0.0,  1.0 ]
     #extrinsicRPY: [ 1.0,  0.0,  0.0,
     #                0.0,  1.0,  0.0,
     #                0.0,  0.0,  1.0 ]
-    
-    #extrinsicRot: [1.0,  0.0,  0.0,
-    #                0.0,  -1.0,  0.0,
-    #                0.0,  0.0, -1.0 ]
-    #extrinsicRPY: [ -1.0,  0.0,  0.0,
-    #               0.0,  1.0,  0.0,
-    #                0.0,  0.0,  1.0 ]
-
-    #lidar>IMU   # for sample bag
-    extrinsicTrans: [ 0.0,  0.0,  0.0 ]
-    extrinsicRot: [ 1.0,  0.0,  0.0,
-                    0.0,  1.0,  0.0,
-                    0.0,  0.0,  1.0 ]
-    extrinsicRPY: [ 1.0,  0.0,  0.0,
-                    0.0,  1.0,  0.0,
-                    0.0,  0.0,  1.0 ]
 
     # LOAM feature threshold
     edgeThreshold: 1.0
